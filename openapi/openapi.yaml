@@ -152,14 +152,16 @@ paths:
     post:
       tags:
         - store
-      operationId: 매장 생성 API
+      summary: 매장 생성 API
+      description: 매장 생성 API
+      operationId: post-stores
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/api-v1-stores-383454066'
             examples:
-              매장 생성 API:
+              post-stores:
                 value:
                   {
                     "name" : "메가커피 서대문역점",
@@ -187,7 +189,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/api-v1-stores1989634448'
               examples:
-                매장 생성 API:
+                post-stores:
                   value:
                     {
                       "id" : 1,
@@ -209,14 +211,16 @@ paths:
     post:
       tags:
         - user
-      operationId: 유저 생성 API
+      summary: 유저 생성 API
+      description: 유저 생성 API
+      operationId: post-users
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/api-v1-users-1318851815'
             examples:
-              유저 생성 API:
+              post-users:
                 value:
                   {
                     "email" : "melon8372@gmail.com",
@@ -244,7 +248,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/api-v1-users1040221739'
               examples:
-                유저 생성 API:
+                post-users:
                   value:
                     {
                       "id" : 1,
@@ -326,7 +330,9 @@ paths:
     get:
       tags:
         - store
-      operationId: 매장 스크롤 리스트 API
+      summary: 매장 스크롤 리스트 API
+      description: 매장 스크롤 리스트 API
+      operationId: get-stores-scroll
       parameters:
         - name: page
           in: query
@@ -354,7 +360,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/api-v1-stores-scroll1321936866'
               examples:
-                매장 스크롤 리스트 API:
+                get-stores-scroll:
                   value:
                     {
                       "content" : [ {
@@ -390,7 +396,9 @@ paths:
     get:
       tags:
         - store
-      operationId: 매장 상세 API
+      summary: 매장 상세 API
+      description: 매장 상세 API
+      operationId: get-stores-detail
       parameters:
         - name: id
           in: path
@@ -406,7 +414,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/api-v1-stores-id-1680989347'
               examples:
-                매장 상세 API:
+                get-stores-detail:
                   value:
                     {
                       "id" : 1,
@@ -447,7 +455,9 @@ paths:
     put:
       tags:
         - store
-      operationId: 매장 수정 API
+      summary: 매장 수정 API
+      description: 매장 수정 API
+      operationId: put-stores
       parameters:
         - name: id
           in: path
@@ -461,7 +471,7 @@ paths:
             schema:
               $ref: '#/components/schemas/api-v1-stores-id-795190884'
             examples:
-              매장 수정 API:
+              put-stores:
                 value:
                   {
                     "type" : "COMPANY_OWNED",
@@ -475,7 +485,9 @@ paths:
     delete:
       tags:
         - store
-      operationId: 매장 삭제 API
+      summary: 매장 삭제 API
+      description: 매장 삭제 API
+      operationId: delete-stores
       parameters:
         - name: id
           in: path
@@ -490,7 +502,9 @@ paths:
     get:
       tags:
         - user
-      operationId: 유저 스크롤 리스트 API
+      summary: 유저 스크롤 리스트 API
+      description: 유저 스크롤 리스트 API
+      operationId: get-users-scroll
       parameters:
         - name: page
           in: query
@@ -542,7 +556,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/api-v1-users-scroll-610140313'
               examples:
-                유저 스크롤 리스트 API:
+                get-users-scroll:
                   value:
                     {
                       "content" : [ {
@@ -585,7 +599,9 @@ paths:
     get:
       tags:
         - user
-      operationId: 유저 상세 API
+      summary: 유저 상세 API
+      description: 유저 상세 API
+      operationId: get-users-detail
       parameters:
         - name: id
           in: path
@@ -601,7 +617,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/api-v1-users-id1199840615'
               examples:
-                유저 상세 API:
+                get-users-detail:
                   value:
                     {
                       "id" : 1,
@@ -654,7 +670,9 @@ paths:
     put:
       tags:
         - user
-      operationId: 유저 수정 API
+      summary: 유저 수정 API
+      description: 유저 수정 API
+      operationId: put-users
       parameters:
         - name: id
           in: path
@@ -668,7 +686,7 @@ paths:
             schema:
               $ref: '#/components/schemas/api-v1-users-id248312028'
             examples:
-              유저 수정 API:
+              put-users:
                 value:
                   {
                     "address" : {
@@ -687,7 +705,9 @@ paths:
     delete:
       tags:
         - user
-      operationId: 유저 삭제 API
+      summary: 유저 삭제 API
+      description: 유저 삭제 API
+      operationId: delete-users
       parameters:
         - name: id
           in: path
@@ -931,6 +951,38 @@ components:
         updatedAt:
           type: string
           description: 변경일
+    api-v1-stores-id-795190884:
+      type: object
+      properties:
+        address:
+          type: object
+          properties:
+            zipCode:
+              type: string
+              description: 우편번호
+            city:
+              type: string
+              description: 도시
+            street:
+              type: string
+              description: 거리
+          description: 주소
+        ownerId:
+          type: number
+          description: 점주 PK
+        type:
+          type: string
+          description: 매장 타입
+        timeRange:
+          type: object
+          properties:
+            startTime:
+              type: string
+              description: 오픈시간
+            endTime:
+              type: string
+              description: 마감시간
+          description: 매장 운영시간
     api-v1-users-scroll-610140313:
       type: object
       properties:
@@ -999,38 +1051,6 @@ components:
         empty:
           type: boolean
           description: 비어있는지
-    api-v1-stores-id-795190884:
-      type: object
-      properties:
-        address:
-          type: object
-          properties:
-            zipCode:
-              type: string
-              description: 우편번호
-            city:
-              type: string
-              description: 도시
-            street:
-              type: string
-              description: 거리
-          description: 주소
-        ownerId:
-          type: number
-          description: 점주 PK
-        type:
-          type: string
-          description: 매장 타입
-        timeRange:
-          type: object
-          properties:
-            startTime:
-              type: string
-              description: 오픈시간
-            endTime:
-              type: string
-              description: 마감시간
-          description: 매장 운영시간
     api-v1-stores1989634448:
       type: object
       properties:
