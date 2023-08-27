@@ -1,0 +1,64 @@
+type: object
+properties:
+  createdAt:
+    type: string
+    description: 생성일
+  educationPlaces:
+    type: array
+    description: 교육 장소 데이터
+    items:
+      type: object
+      properties:
+        date:
+          type: string
+          description: 날짜
+        address:
+          type: object
+          properties:
+            zipCode:
+              type: string
+              description: 우편번호
+            city:
+              type: string
+              description: 도시
+            street:
+              type: string
+              description: 거리
+          description: 교육 장소 주소
+        id:
+          type: number
+          description: 교육 장소 PK
+        maxParticipant:
+          type: number
+          description: 최대 참여자 수
+        timeRange:
+          type: object
+          properties:
+            startTime:
+              type: string
+              description: 시작시간
+            endTime:
+              type: string
+              description: 종료시간
+          description: 운영시간
+  name:
+    type: string
+    description: 교육 이름
+  id:
+    type: number
+    description: 교육 PK
+  content:
+    type: string
+    description: 교육 설명
+  updatedAt:
+    type: string
+    description: 변경일
+  targetTypes:
+    type: array
+    description: 대상자 타입들
+    items:
+      oneOf:
+        - type: object
+        - type: boolean
+        - type: string
+        - type: number

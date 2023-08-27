@@ -1,0 +1,11 @@
+type: object
+properties:
+  educationPlaceIds:
+    type: array
+    description: 등록할 교육장소 PK들
+    items:
+      oneOf:
+        - type: object
+        - type: boolean
+        - type: string
+        - type: number

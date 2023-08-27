@@ -1,0 +1,33 @@
+type: object
+properties:
+  employeeType:
+    type: string
+    description: 직원 타입
+  phoneNumber:
+    type: string
+    description: 연락처
+  address:
+    type: object
+    properties:
+      zipCode:
+        type: string
+        description: 우편번호
+      city:
+        type: string
+        description: 도시
+      street:
+        type: string
+        description: 거리
+    description: 주소
+  name:
+    type: string
+    description: 이름
+  storeId:
+    type: number
+    description: 유저 PK
+  workTimeType:
+    type: string
+    description: 업무 요일 타입
+  email:
+    type: string
+    description: 이메일

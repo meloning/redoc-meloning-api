@@ -1,0 +1,27 @@
+post:
+  tags:
+    - education
+  summary: 교육 이수할 매장 등록 API
+  description: 교육 이수할 매장 등록 API
+  operationId: post-educations-stores-register
+  parameters:
+    - name: id
+      in: path
+      description: ''
+      required: true
+      schema:
+        type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: >-
+            ../components/schemas/api-v1-educations-id-stores-register2072950516.yaml
+        examples:
+          post-educations-stores-register:
+            value:
+              stores:
+                - 1
+  responses:
+    '202':
+      description: '202'

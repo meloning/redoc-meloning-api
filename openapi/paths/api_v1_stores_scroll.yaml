@@ -1,0 +1,59 @@
+get:
+  tags:
+    - store
+  summary: 매장 스크롤 리스트 API
+  description: 매장 스크롤 리스트 API
+  operationId: get-stores-scroll
+  parameters:
+    - name: page
+      in: query
+      description: 페이지 번호
+      required: false
+      schema:
+        type: string
+    - name: size
+      in: query
+      description: 출력될 요소 개수
+      required: false
+      schema:
+        type: string
+    - name: storeId
+      in: query
+      description: 마지막 매장 ID
+      required: false
+      schema:
+        type: string
+  responses:
+    '200':
+      description: '200'
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/api-v1-stores-scroll1321936866.yaml
+          examples:
+            get-stores-scroll:
+              value:
+                content:
+                  - id: 1
+                    name: 메가커피 서대문역점
+                    type: FRANCHISE
+                pageable:
+                  sort:
+                    empty: true
+                    sorted: false
+                    unsorted: true
+                  offset: 0
+                  pageNumber: 0
+                  pageSize: 5
+                  paged: true
+                  unpaged: false
+                size: 5
+                number: 0
+                sort:
+                  empty: true
+                  sorted: false
+                  unsorted: true
+                numberOfElements: 1
+                first: true
+                last: false
+                empty: false

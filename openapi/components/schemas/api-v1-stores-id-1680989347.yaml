@@ -1,0 +1,102 @@
+type: object
+properties:
+  createdAt:
+    type: string
+    description: 생성일
+  address:
+    type: object
+    properties:
+      zipCode:
+        type: string
+        description: 우편번호
+      city:
+        type: string
+        description: 도시
+      street:
+        type: string
+        description: 거리
+    description: 매장 주소
+  name:
+    type: string
+    description: 매장 이름
+  educations:
+    type: array
+    description: 교육 프로그램 데이터
+    items:
+      type: object
+      properties:
+        educationPlaces:
+          type: array
+          description: 교육 장소 데이터
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                description: 날짜
+              address:
+                type: object
+                properties:
+                  zipCode:
+                    type: string
+                    description: 우편번호
+                  city:
+                    type: string
+                    description: 도시
+                  street:
+                    type: string
+                    description: 거리
+                description: 교육 장소 주소
+              id:
+                type: number
+                description: 교육 장소 PK
+              maxParticipant:
+                type: number
+                description: 최대 참여자 수
+              timeRange:
+                type: object
+                properties:
+                  startTime:
+                    type: string
+                    description: 시작시간
+                  endTime:
+                    type: string
+                    description: 종료시간
+                description: 운영시간
+        name:
+          type: string
+          description: 교육 프로그램 이름
+        id:
+          type: number
+          description: 교육 프로그램 PK
+        targetTypes:
+          type: array
+          description: 대상자 타입들
+          items:
+            oneOf:
+              - type: object
+              - type: boolean
+              - type: string
+              - type: number
+  id:
+    type: number
+    description: 매장 PK
+  ownerId:
+    type: number
+    description: 점주 PK
+  type:
+    type: string
+    description: 매장 타입
+  updatedAt:
+    type: string
+    description: 변경일
+  timeRange:
+    type: object
+    properties:
+      startTime:
+        type: string
+        description: 오픈시간
+      endTime:
+        type: string
+        description: 마감시간
+    description: 매장 운영시간

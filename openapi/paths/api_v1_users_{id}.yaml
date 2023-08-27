@@ -1,0 +1,109 @@
+get:
+  tags:
+    - user
+  summary: 유저 상세 API
+  description: 유저 상세 API
+  operationId: get-users-detail
+  parameters:
+    - name: id
+      in: path
+      description: ''
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: '200'
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/api-v1-users-id1199840615.yaml
+          examples:
+            get-users-detail:
+              value:
+                id: 1
+                email: ''
+                name: 메로닝1
+                address:
+                  city: 도시
+                  street: 거리
+                  zipCode: '12345'
+                employeeType: MANAGER
+                phoneNumber: 010-1234-1234
+                workTimeType: WEEKDAY
+                store:
+                  id: 1
+                  name: 메가커피 서대문역점
+                  type: FRANCHISE
+                  address:
+                    city: 도시
+                    street: 거리
+                    zipCode: '12345'
+                  timeRange:
+                    startTime: '00:00'
+                    endTime: '23:59:59.999999999'
+                  deleted: false
+                educations:
+                  - id: 1
+                    name: 테스트 프로그램
+                    educationPlaces:
+                      - id: 1
+                        address:
+                          city: 도시
+                          street: 거리
+                          zipCode: '12345'
+                        maxParticipant: 3
+                        date: '2023-08-28'
+                        timeRange:
+                          startTime: '00:00'
+                          endTime: '23:59:59.999999999'
+                createdAt: null
+                updatedAt: null
+put:
+  tags:
+    - user
+  summary: 유저 수정 API
+  description: 유저 수정 API
+  operationId: put-users
+  parameters:
+    - name: id
+      in: path
+      description: ''
+      required: true
+      schema:
+        type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/api-v1-users-id248312028.yaml
+        examples:
+          put-users:
+            value:
+              address:
+                city: 어느 도시
+                street: 어느 거리
+                zipCode: '12345'
+              employeeType: MANAGER
+              phoneNumber: 010-1234-1234
+              workTimeType: WEEKDAY
+              storeId: 1
+  responses:
+    '200':
+      description: '200'
+delete:
+  tags:
+    - user
+  summary: 유저 삭제 API
+  description: 유저 삭제 API
+  operationId: delete-users
+  parameters:
+    - name: id
+      in: path
+      description: ''
+      required: true
+      schema:
+        type: string
+  responses:
+    '204':
+      description: '204'

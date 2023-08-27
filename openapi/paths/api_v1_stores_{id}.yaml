@@ -1,0 +1,96 @@
+get:
+  tags:
+    - store
+  summary: 매장 상세 API
+  description: 매장 상세 API
+  operationId: get-stores-detail
+  parameters:
+    - name: id
+      in: path
+      description: ''
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: '200'
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/api-v1-stores-id-1680989347.yaml
+          examples:
+            get-stores-detail:
+              value:
+                id: 1
+                name: 메가커피 서대문역점
+                type: FRANCHISE
+                ownerId: null
+                address:
+                  city: 도시
+                  street: 거리
+                  zipCode: '12345'
+                timeRange:
+                  startTime: '00:00'
+                  endTime: '23:59:59.999999999'
+                educations:
+                  - id: 1
+                    name: 테스트 프로그램
+                    targetTypes:
+                      - PART_TIME
+                    educationPlaces:
+                      - id: 1
+                        address:
+                          city: 도시
+                          street: 거리
+                          zipCode: '12345'
+                        maxParticipant: 3
+                        date: '2023-08-28'
+                        timeRange:
+                          startTime: '00:00'
+                          endTime: '23:59:59.999999999'
+                createdAt: null
+                updatedAt: null
+put:
+  tags:
+    - store
+  summary: 매장 수정 API
+  description: 매장 수정 API
+  operationId: put-stores
+  parameters:
+    - name: id
+      in: path
+      description: ''
+      required: true
+      schema:
+        type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/api-v1-stores-id-795190884.yaml
+        examples:
+          put-stores:
+            value:
+              type: COMPANY_OWNED
+              ownerId: 1
+              address: null
+              timeRange: null
+  responses:
+    '200':
+      description: '200'
+delete:
+  tags:
+    - store
+  summary: 매장 삭제 API
+  description: 매장 삭제 API
+  operationId: delete-stores
+  parameters:
+    - name: id
+      in: path
+      description: ''
+      required: true
+      schema:
+        type: string
+  responses:
+    '204':
+      description: '204'

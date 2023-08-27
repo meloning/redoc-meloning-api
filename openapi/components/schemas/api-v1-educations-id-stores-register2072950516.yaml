@@ -1,0 +1,11 @@
+type: object
+properties:
+  stores:
+    type: array
+    description: 이수할 매장 PK들
+    items:
+      oneOf:
+        - type: object
+        - type: boolean
+        - type: string
+        - type: number

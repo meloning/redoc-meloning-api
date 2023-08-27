@@ -1,0 +1,128 @@
+type: object
+properties:
+  createdAt:
+    type: string
+    description: 생성일
+  phoneNumber:
+    type: string
+    description: 연락처
+  employeeType:
+    type: string
+    description: 직원 타입
+  address:
+    type: object
+    properties:
+      zipCode:
+        type: string
+        description: 우편번호
+      city:
+        type: string
+        description: 도시
+      street:
+        type: string
+        description: 거리
+    description: 주소
+  name:
+    type: string
+    description: 이름
+  educations:
+    type: array
+    description: 교육 프로그램 데이터
+    items:
+      type: object
+      properties:
+        educationPlaces:
+          type: array
+          description: 교육 장소 데이터
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                description: 날짜
+              address:
+                type: object
+                properties:
+                  zipCode:
+                    type: string
+                    description: 우편번호
+                  city:
+                    type: string
+                    description: 도시
+                  street:
+                    type: string
+                    description: 거리
+                description: 교육 장소 주소
+              id:
+                type: number
+                description: 교육 장소 PK
+              maxParticipant:
+                type: number
+                description: 최대 참여자 수
+              timeRange:
+                type: object
+                properties:
+                  startTime:
+                    type: string
+                    description: 시작시간
+                  endTime:
+                    type: string
+                    description: 종료시간
+                description: 운영시간
+        name:
+          type: string
+          description: 교육 프로그램 이름
+        id:
+          type: number
+          description: 교육 프로그램 PK
+  store:
+    type: object
+    properties:
+      deleted:
+        type: boolean
+        description: 매장 삭제여부
+      address:
+        type: object
+        properties:
+          zipCode:
+            type: string
+            description: 우편번호
+          city:
+            type: string
+            description: 도시
+          street:
+            type: string
+            description: 거리
+        description: 매장 주소
+      name:
+        type: string
+        description: 매장 이름
+      id:
+        type: number
+        description: 매장 PK
+      type:
+        type: string
+        description: 매장 타입
+      timeRange:
+        type: object
+        properties:
+          startTime:
+            type: string
+            description: 오픈시간
+          endTime:
+            type: string
+            description: 마감시간
+        description: 매장 운영시간
+    description: 매장 데이터
+  id:
+    type: number
+    description: 유저 PK
+  workTimeType:
+    type: string
+    description: 업무 요일 타입
+  email:
+    type: string
+    description: 이메일
+  updatedAt:
+    type: string
+    description: 변경일

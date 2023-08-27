@@ -1,0 +1,35 @@
+post:
+  tags:
+    - education
+  summary: 교육 장소 등록 API
+  description: 교육 장소 등록 API
+  operationId: post-educations-places-register
+  parameters:
+    - name: id
+      in: path
+      description: ''
+      required: true
+      schema:
+        type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: >-
+            ../components/schemas/api-v1-educations-id-place-register-333433684.yaml
+        examples:
+          post-educations-places-register:
+            value:
+              places:
+                - address:
+                    city: 어느 도시
+                    street: 어느 거리
+                    zipCode: '12345'
+                  maxParticipant: 3
+                  date: '2023-08-28'
+                  timeRange:
+                    startTime: '00:00'
+                    endTime: '23:59:59'
+  responses:
+    '202':
+      description: '202'

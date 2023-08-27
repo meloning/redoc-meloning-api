@@ -1,0 +1,63 @@
+post:
+  tags:
+    - user
+  summary: 유저 생성 API
+  description: 유저 생성 API
+  operationId: post-users
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/api-v1-users-1318851815.yaml
+        examples:
+          post-users:
+            value:
+              email: melon8372@gmail.com
+              name: 메로닝
+              address:
+                city: 어느 도시
+                street: 어느 거리
+                zipCode: '12345'
+              employeeType: MANAGER
+              phoneNumber: 010-1234-1234
+              workTimeType: WEEKDAY
+              storeId: 1
+  responses:
+    '201':
+      description: '201'
+      headers:
+        Location:
+          description: Redirect할 유저 상세 API Url Path
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/api-v1-users1040221739.yaml
+          examples:
+            post-users:
+              value:
+                id: 1
+                email: ''
+                name: 메로닝1
+                address:
+                  city: 도시
+                  street: 거리
+                  zipCode: '12345'
+                employeeType: MANAGER
+                phoneNumber: 010-1234-1234
+                workTimeType: WEEKDAY
+                store:
+                  id: 1
+                  name: 메가커피 서대문역점
+                  type: FRANCHISE
+                  address:
+                    city: 도시
+                    street: 거리
+                    zipCode: '12345'
+                  timeRange:
+                    startTime: '00:00'
+                    endTime: '23:59:59.999999999'
+                  deleted: false
+                createdAt: null
+                updatedAt: null

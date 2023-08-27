@@ -1,0 +1,37 @@
+type: object
+properties:
+  places:
+    type: array
+    description: 교육장소 요청 데이터
+    items:
+      type: object
+      properties:
+        date:
+          type: string
+          description: 날짜
+        address:
+          type: object
+          properties:
+            zipCode:
+              type: string
+              description: 우편번호
+            city:
+              type: string
+              description: 도시
+            street:
+              type: string
+              description: 거리
+          description: 교육 장소 주소
+        maxParticipant:
+          type: number
+          description: 최대 참여자 수
+        timeRange:
+          type: object
+          properties:
+            startTime:
+              type: string
+              description: 시작시간
+            endTime:
+              type: string
+              description: 종료시간
+          description: 운영시간

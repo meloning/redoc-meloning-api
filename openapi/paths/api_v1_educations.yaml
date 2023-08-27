@@ -1,0 +1,40 @@
+post:
+  tags:
+    - education
+  summary: 교육 프로그램 생성 API
+  description: 교육 프로그램 생성 API
+  operationId: post-educations
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/api-v1-educations1300106391.yaml
+        examples:
+          post-educations:
+            value:
+              name: 테스트 교육 프로그램
+              content: 테스트 교육
+              targetTypes:
+                - PART_TIME
+  responses:
+    '201':
+      description: '201'
+      headers:
+        Location:
+          description: Redirect할 교육 상세 API Url Path
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/api-v1-educations-1716852041.yaml
+          examples:
+            post-educations:
+              value:
+                id: 1
+                name: 테스트 프로그램
+                content: 테스트 내용
+                targetTypes:
+                  - PART_TIME
+                createdAt: null
+                updatedAt: null

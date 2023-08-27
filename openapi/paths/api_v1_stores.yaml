@@ -1,0 +1,50 @@
+post:
+  tags:
+    - store
+  summary: 매장 생성 API
+  description: 매장 생성 API
+  operationId: post-stores
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/api-v1-stores-383454066.yaml
+        examples:
+          post-stores:
+            value:
+              name: 메가커피 서대문역점
+              type: FRANCHISE
+              address:
+                city: 어느 도시
+                street: 어느 거리
+                zipCode: '12345'
+              timeRange:
+                startTime: '00:00'
+                endTime: '23:59:59'
+  responses:
+    '201':
+      description: '201'
+      headers:
+        Location:
+          description: Redirect할 매장 상세 API Url Path
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/api-v1-stores1989634448.yaml
+          examples:
+            post-stores:
+              value:
+                id: 1
+                name: 메가커피 서대문역점
+                type: FRANCHISE
+                address:
+                  city: 도시
+                  street: 거리
+                  zipCode: '12345'
+                timeRange:
+                  startTime: '00:00'
+                  endTime: '23:59:59.999999999'
+                createdAt: null
+                updatedAt: null

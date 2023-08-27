@@ -1,0 +1,40 @@
+type: object
+properties:
+  createdAt:
+    type: string
+    description: 생성일
+  address:
+    type: object
+    properties:
+      zipCode:
+        type: string
+        description: 우편번호
+      city:
+        type: string
+        description: 도시
+      street:
+        type: string
+        description: 거리
+    description: 매장 주소
+  name:
+    type: string
+    description: 매장 이름
+  id:
+    type: number
+    description: 매장 PK
+  type:
+    type: string
+    description: 매장 타입
+  updatedAt:
+    type: string
+    description: 변경일
+  timeRange:
+    type: object
+    properties:
+      startTime:
+        type: string
+        description: 오픈시간
+      endTime:
+        type: string
+        description: 마감시간
+    description: 매장 운영시간

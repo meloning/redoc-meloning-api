@@ -1,0 +1,41 @@
+get:
+  tags:
+    - education
+  summary: 교육 프로그램 상세 API
+  description: 교육 프로그램 상세 API
+  operationId: get-educations-detail
+  parameters:
+    - name: id
+      in: path
+      description: ''
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: '200'
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/api-v1-educations-id-1347438090.yaml
+          examples:
+            get-educations-detail:
+              value:
+                id: 1
+                name: 테스트 프로그램
+                content: 테스트 내용
+                targetTypes:
+                  - PART_TIME
+                educationPlaces:
+                  - id: 1
+                    address:
+                      city: 도시
+                      street: 거리
+                      zipCode: '12345'
+                    maxParticipant: 3
+                    date: '2023-08-28'
+                    timeRange:
+                      startTime: '00:00'
+                      endTime: '23:59:59.999999999'
+                createdAt: null
+                updatedAt: null

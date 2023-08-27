@@ -1,0 +1,17 @@
+type: object
+properties:
+  name:
+    type: string
+    description: 이름
+  content:
+    type: string
+    description: 내용
+  targetTypes:
+    type: array
+    description: 대상자 타입들
+    items:
+      oneOf:
+        - type: object
+        - type: boolean
+        - type: string
+        - type: number

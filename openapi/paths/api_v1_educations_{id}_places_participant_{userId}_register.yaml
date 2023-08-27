@@ -1,0 +1,33 @@
+post:
+  tags:
+    - education
+  summary: 교육 장소 참여자 등록 API
+  description: 교육 장소 참여자 등록 API
+  operationId: post-educations-places-participant-register
+  parameters:
+    - name: id
+      in: path
+      description: ''
+      required: true
+      schema:
+        type: string
+    - name: userId
+      in: path
+      description: ''
+      required: true
+      schema:
+        type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: >-
+            ../components/schemas/api-v1-educations-id-places-participant-userId-register-1794638756.yaml
+        examples:
+          post-educations-places-participant-register:
+            value:
+              educationPlaceIds:
+                - 1
+  responses:
+    '202':
+      description: '202'

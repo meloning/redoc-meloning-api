@@ -1,0 +1,67 @@
+type: object
+properties:
+  number:
+    type: number
+    description: 현재 페이지 번호
+  numberOfElements:
+    type: number
+    description: 현재 페이지에서 출력된 요소 개수
+  last:
+    type: boolean
+    description: 마지막인지
+  size:
+    type: number
+    description: 몇개까지 보이게 할건지
+  sort:
+    type: object
+    properties:
+      unsorted:
+        type: boolean
+        description: 정렬되어있지 않은지
+      sorted:
+        type: boolean
+        description: 정렬되었는지
+      empty:
+        type: boolean
+        description: 정렬설정이 비어있는지
+    description: 정렬
+  first:
+    type: boolean
+    description: 처음인지
+  content:
+    type: array
+    description: 실제 데이터
+    items:
+      type: object
+      properties:
+        employeeType:
+          type: string
+          description: 직원 타입
+        name:
+          type: string
+          description: 유저 이름
+        store:
+          type: object
+          properties:
+            deleted:
+              type: boolean
+              description: 매장 삭제여부
+            name:
+              type: string
+              description: 매장 이름
+            id:
+              type: number
+              description: 매장 ID
+            type:
+              type: string
+              description: 매장 타입
+          description: 매장
+        id:
+          type: number
+          description: 유저 PK
+        workTimeType:
+          type: string
+          description: 업무요일 타입
+  empty:
+    type: boolean
+    description: 비어있는지
