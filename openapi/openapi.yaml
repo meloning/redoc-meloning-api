@@ -1,80 +1,1559 @@
-openapi: 3.1.0
+openapi: 3.0.1
 info:
+  title: MGC Employee Manage OAS
+  description: |
+    이 문서는 메가 커피 교육 직원들의 프로그램 관리에 필요한 Rest API Spec을 기술한 문서입니다.
+
+    아래 정보들을 필수로 확인 및 참고해주시길 바랍니다.
+
+    # Http Method
+
+    Rest API에서 사용하는 Http Method는 표준 Http와 Rest 규약을 따릅니다.
+
+    |          |                                |
+    |----------|--------------------------------|
+    | Method   | 설명                             |
+    | `GET`    | 리소스를 가져올 때 사용                  |
+    | `POST`   | 새 리소스를 만들 때 사용                 |
+    | `PUT`    | 기존 리소스 Spec 전체를 수정할 때 사용       |
+    | `PATCH`  | 기존 리소스의 일부를 수정할 때 사용           |
+    | `DELETE` | 기존 리소스를 삭제할 때 사용               |
+
+    # Http 상태 코드
+
+    Rest API에서 사용하는 Http StatusCode는 표준 Http와 Rest 규약을
+    따릅니다.
+
+    |                             |                                |
+    |-----------------------------|--------------------------------|
+    | 상태 코드                       | 설명                             |
+    | `200 OK`                    | 요청을 성공적으로 처리                   |
+    | `201 Created`               | 새 리소스를 성공적으로 생성                |
+    | `204 No Content`            | 성공적으로 요청한 리소스 처리               |
+    | `400 Bad Request`           | 잘못된 요청                         |
+    | `404 Not Found`             | 요청한 리소스가 존재하지 않음               |
+    | `409 Conflicts`             | 요청한 리소스가 비즈니스 처리 과정에서 충돌됨      |
+    | `500 Internal Server Error` | 예기치 못한 서버 에러 발생                |
+
+    # 오류
+
+    Input Validation 에러와 비즈니스 에러로 구분됩니다.
+
+    ## Input Validation
+
+    Http 상태코드는 400 Bad Request로 동일하게 응답됩니다.
+
+    [Example]
+
+    ```json
+    {
+        "code": "input_validation",
+        "message": "An error occurred in the process of validating the input value.",
+        "errors": [
+            {
+                "field": "email",
+                "message": "이메일 형식이 아닙니다."
+            }
+        ]
+    }
+    ```
+
+    ## Business Validation
+
+    [Example]
+
+    ```json
+    {
+        "code": "already_exist",
+        "message": "이미 존재하는 유저입니다.",
+        "errors": []
+    }
+    ```
+
+    ## Error Code
+
+    비즈니스 에러 코드에 따라 Http 상태코드가 다릅니다.
+
+    |       |                  |                      |
+    |-------|------------------|----------------------|
+    | 상태 코드 | 코드               | 설명                   |
+    | 400   | input_validation | 요청한 입력값이 잘못된 경우      |
+    | 400   | illegal_argument | 리소스 핸들링중 요청값이 잘못된 경우 |
+    | 400   | already_exist    | 이미 존재하는 리소스인 경우      |
+    | 404   | not_found        | 리소스가 존재하지 않을 경우      |
+    | 409   | already_full     | 리소스가 이미 가득차 있는 경우    |
+    | 409   | conflict_field   | 리소스가 비즈니스적 충돌이 있는 경우 |
+    | 409   | expired_field    | 만료된 경우               |
+    | 409   | not_register     | 리소스를 등록할 수 없는 경우     |
+
+    # API 공통
+
+    요청, 응답간 공통으로 적용된 부분에 대해 설명합니다.
+
+    ## Response
+
+    응답 Spec중 Header에 Trace Id가 포합됩니다.
+
+    |                     |                |
+    |---------------------|----------------|
+    | header              | 설명             |
+    | x-meloning-trace-id | API 요청을 추적할 ID |
   version: 1.0.0
-  title: Example.com
-  termsOfService: https://example.com/terms/
-  contact:
-    email: contact@example.com
-    url: http://example.com/contact
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  x-logo:
-    url: https://redocly.github.io/openapi-template/logo.png
-  description: >
-    This is an **example** API to demonstrate features of the OpenAPI
-    specification.
-
-    # Introduction
-
-    This API definition is intended to to be a good starting point for
-    describing your API in [OpenAPI/Swagger
-    format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md).
-
-    It also demonstrates features of the
-    [create-openapi-repo](https://github.com/Redocly/create-openapi-repo) tool
-    and the [Redoc](https://github.com/Redocly/Redoc) documentation engine. Beyond
-    the standard OpenAPI syntax, we use a few 
-    [vendor extensions](https://github.com/Redocly/Redoc/blob/master/docs/redoc-vendor-extensions.md).
-
-    # OpenAPI Specification
-
-    The goal of The OpenAPI Specification is to define a standard, language-agnostic interface to REST APIs which
-    allows both humans and computers to discover and understand the capabilities
-    of the service without access to source
-    code, documentation, or through network traffic inspection. When properly
-    defined via OpenAPI, a consumer can 
-    understand and interact with the remote service with a minimal amount of
-    implementation logic. Similar to what
-    interfaces have done for lower-level programming, OpenAPI removes the
-    guesswork in calling the service.
-tags:
-  - name: Echo
-    description: Example echo operations.
-  - name: User
-    description: Operations about users.
-  - name: Tag
-    description: This is a tag description.
 servers:
-  - url: https://{tenant}/api/v1
-    variables:
-      tenant:
-        default: www
-        description: Your tenant id
-  - url: https://example.com/api/v1
+- url: http://localhost:9000
+tags: []
 paths:
-  /users/{username}:
-    $ref: paths/users_{username}.yaml
-  /echo:
-    $ref: paths/echo.yaml
-  /pathItem:
-    $ref: paths/pathItem.yaml
-  /pathItemWithExamples:
-    $ref: paths/pathItemWithExamples.yaml
+  /api/v1/educations:
+    post:
+      tags:
+      - education
+      operationId: 교육프로그램 생성 API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-v1-educations1300106391'
+            examples:
+              교육프로그램 생성 API:
+                value:
+                  {
+                    "name" : "테스트 교육 프로그램",
+                    "content" : "테스트 교육",
+                    "targetTypes" : [ "PART_TIME" ]
+                  }
+      responses:
+        "201":
+          description: "201"
+          headers:
+            Location:
+              description: Redirect할 교육 상세 API Url Path
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-educations-1716852041'
+              examples:
+                교육프로그램 생성 API:
+                  value:
+                    {
+                      "id" : 1,
+                      "name" : "테스트 프로그램",
+                      "content" : "테스트 내용",
+                      "targetTypes" : [ "PART_TIME" ],
+                      "createdAt" : null,
+                      "updatedAt" : null
+                    }
+  /api/v1/stores:
+    post:
+      tags:
+      - store
+      operationId: 매장 생성 API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-v1-stores-383454066'
+            examples:
+              매장 생성 API:
+                value:
+                  {
+                    "name" : "메가커피 서대문역점",
+                    "type" : "FRANCHISE",
+                    "address" : {
+                      "city" : "어느 도시",
+                      "street" : "어느 거리",
+                      "zipCode" : "12345"
+                    },
+                    "timeRange" : {
+                      "startTime" : "00:00",
+                      "endTime" : "23:59:59"
+                    }
+                  }
+      responses:
+        "201":
+          description: "201"
+          headers:
+            Location:
+              description: Redirect할 매장 상세 API Url Path
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-stores1989634448'
+              examples:
+                매장 생성 API:
+                  value:
+                    {
+                      "id" : 1,
+                      "name" : "메가커피 서대문역점",
+                      "type" : "FRANCHISE",
+                      "address" : {
+                        "city" : "도시",
+                        "street" : "거리",
+                        "zipCode" : "12345"
+                      },
+                      "timeRange" : {
+                        "startTime" : "00:00",
+                        "endTime" : "23:59:59.999999999"
+                      },
+                      "createdAt" : null,
+                      "updatedAt" : null
+                    }
+  /api/v1/users:
+    post:
+      tags:
+      - user
+      operationId: 유저 생성 API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-v1-users-1318851815'
+            examples:
+              유저 생성 API:
+                value:
+                  {
+                    "email" : "melon8372@gmail.com",
+                    "name" : "메로닝",
+                    "address" : {
+                      "city" : "어느 도시",
+                      "street" : "어느 거리",
+                      "zipCode" : "12345"
+                    },
+                    "employeeType" : "MANAGER",
+                    "phoneNumber" : "010-1234-1234",
+                    "workTimeType" : "WEEKDAY",
+                    "storeId" : 1
+                  }
+      responses:
+        "201":
+          description: "201"
+          headers:
+            Location:
+              description: Redirect할 유저 상세 API Url Path
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-users1040221739'
+              examples:
+                유저 생성 API:
+                  value:
+                    {
+                      "id" : 1,
+                      "email" : "",
+                      "name" : "메로닝1",
+                      "address" : {
+                        "city" : "도시",
+                        "street" : "거리",
+                        "zipCode" : "12345"
+                      },
+                      "employeeType" : "MANAGER",
+                      "phoneNumber" : "010-1234-1234",
+                      "workTimeType" : "WEEKDAY",
+                      "store" : {
+                        "id" : 1,
+                        "name" : "메가커피 서대문역점",
+                        "type" : "FRANCHISE",
+                        "address" : {
+                          "city" : "도시",
+                          "street" : "거리",
+                          "zipCode" : "12345"
+                        },
+                        "timeRange" : {
+                          "startTime" : "00:00",
+                          "endTime" : "23:59:59.999999999"
+                        },
+                        "deleted" : false
+                      },
+                      "createdAt" : null,
+                      "updatedAt" : null
+                    }
+  /api/v1/educations/{id}:
+    get:
+      tags:
+      - education
+      operationId: 교육 프로그램 상세 API
+      parameters:
+      - name: id
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-educations-id-1347438090'
+              examples:
+                교육 프로그램 상세 API:
+                  value:
+                    {
+                      "id" : 1,
+                      "name" : "테스트 프로그램",
+                      "content" : "테스트 내용",
+                      "targetTypes" : [ "PART_TIME" ],
+                      "educationPlaces" : [ {
+                        "id" : 1,
+                        "address" : {
+                          "city" : "도시",
+                          "street" : "거리",
+                          "zipCode" : "12345"
+                        },
+                        "maxParticipant" : 3,
+                        "date" : "2023-08-28",
+                        "timeRange" : {
+                          "startTime" : "00:00",
+                          "endTime" : "23:59:59.999999999"
+                        }
+                      } ],
+                      "createdAt" : null,
+                      "updatedAt" : null
+                    }
+  /api/v1/stores/scroll:
+    get:
+      tags:
+      - store
+      operationId: 매장 스크롤 리스트 API
+      parameters:
+      - name: page
+        in: query
+        description: 페이지 번호
+        required: false
+        schema:
+          type: string
+      - name: size
+        in: query
+        description: 출력될 요소 개수
+        required: false
+        schema:
+          type: string
+      - name: storeId
+        in: query
+        description: 마지막 매장 ID
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-stores-scroll1321936866'
+              examples:
+                매장 스크롤 리스트 API:
+                  value:
+                    {
+                      "content" : [ {
+                        "id" : 1,
+                        "name" : "메가커피 서대문역점",
+                        "type" : "FRANCHISE"
+                      } ],
+                      "pageable" : {
+                        "sort" : {
+                          "empty" : true,
+                          "sorted" : false,
+                          "unsorted" : true
+                        },
+                        "offset" : 0,
+                        "pageNumber" : 0,
+                        "pageSize" : 5,
+                        "paged" : true,
+                        "unpaged" : false
+                      },
+                      "size" : 5,
+                      "number" : 0,
+                      "sort" : {
+                        "empty" : true,
+                        "sorted" : false,
+                        "unsorted" : true
+                      },
+                      "first" : true,
+                      "last" : false,
+                      "numberOfElements" : 1,
+                      "empty" : false
+                    }
+  /api/v1/stores/{id}:
+    get:
+      tags:
+      - store
+      operationId: 매장 상세 API
+      parameters:
+      - name: id
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-stores-id-1680989347'
+              examples:
+                매장 상세 API:
+                  value:
+                    {
+                      "id" : 1,
+                      "name" : "메가커피 서대문역점",
+                      "type" : "FRANCHISE",
+                      "ownerId" : null,
+                      "address" : {
+                        "city" : "도시",
+                        "street" : "거리",
+                        "zipCode" : "12345"
+                      },
+                      "timeRange" : {
+                        "startTime" : "00:00",
+                        "endTime" : "23:59:59.999999999"
+                      },
+                      "educations" : [ {
+                        "id" : 1,
+                        "name" : "테스트 프로그램",
+                        "targetTypes" : [ "PART_TIME" ],
+                        "educationPlaces" : [ {
+                          "id" : 1,
+                          "address" : {
+                            "city" : "도시",
+                            "street" : "거리",
+                            "zipCode" : "12345"
+                          },
+                          "maxParticipant" : 3,
+                          "date" : "2023-08-28",
+                          "timeRange" : {
+                            "startTime" : "00:00",
+                            "endTime" : "23:59:59.999999999"
+                          }
+                        } ]
+                      } ],
+                      "createdAt" : null,
+                      "updatedAt" : null
+                    }
+    put:
+      tags:
+      - store
+      operationId: 매장 수정 API
+      parameters:
+      - name: id
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-v1-stores-id-795190884'
+            examples:
+              매장 수정 API:
+                value:
+                  {
+                    "type" : "COMPANY_OWNED",
+                    "ownerId" : 1,
+                    "address" : null,
+                    "timeRange" : null
+                  }
+      responses:
+        "200":
+          description: "200"
+    delete:
+      tags:
+      - store
+      operationId: 매장 삭제 API
+      parameters:
+      - name: id
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: "204"
+  /api/v1/users/scroll:
+    get:
+      tags:
+      - user
+      operationId: 유저 스크롤 리스트 API
+      parameters:
+      - name: page
+        in: query
+        description: 페이지 번호
+        required: false
+        schema:
+          type: string
+      - name: size
+        in: query
+        description: 출력될 요소 개수
+        required: false
+        schema:
+          type: string
+      - name: userId
+        in: query
+        description: 마지막 유저 ID
+        required: false
+        schema:
+          type: string
+      - name: keyword
+        in: query
+        description: 유저 이름 검색
+        required: false
+        schema:
+          type: string
+      - name: employeeType
+        in: query
+        description: 직원 타입
+        required: false
+        schema:
+          type: string
+      - name: workTimeType
+        in: query
+        description: 업무요일 타입
+        required: false
+        schema:
+          type: string
+      - name: storeId
+        in: query
+        description: 매장 ID
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-users-scroll-610140313'
+              examples:
+                유저 스크롤 리스트 API:
+                  value:
+                    {
+                      "content" : [ {
+                        "id" : 1,
+                        "name" : "메로닝1",
+                        "employeeType" : "MANAGER",
+                        "workTimeType" : "WEEKDAY",
+                        "store" : {
+                          "id" : 1,
+                          "name" : "메가커피 서대문역점",
+                          "type" : "FRANCHISE",
+                          "deleted" : false
+                        }
+                      } ],
+                      "pageable" : {
+                        "sort" : {
+                          "empty" : true,
+                          "sorted" : false,
+                          "unsorted" : true
+                        },
+                        "offset" : 0,
+                        "pageNumber" : 0,
+                        "pageSize" : 5,
+                        "paged" : true,
+                        "unpaged" : false
+                      },
+                      "size" : 5,
+                      "number" : 0,
+                      "sort" : {
+                        "empty" : true,
+                        "sorted" : false,
+                        "unsorted" : true
+                      },
+                      "first" : true,
+                      "last" : false,
+                      "numberOfElements" : 1,
+                      "empty" : false
+                    }
+  /api/v1/users/{id}:
+    get:
+      tags:
+      - user
+      operationId: 유저 상세 API
+      parameters:
+      - name: id
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-users-id1199840615'
+              examples:
+                유저 상세 API:
+                  value:
+                    {
+                      "id" : 1,
+                      "email" : "",
+                      "name" : "메로닝1",
+                      "address" : {
+                        "city" : "도시",
+                        "street" : "거리",
+                        "zipCode" : "12345"
+                      },
+                      "employeeType" : "MANAGER",
+                      "phoneNumber" : "010-1234-1234",
+                      "workTimeType" : "WEEKDAY",
+                      "store" : {
+                        "id" : 1,
+                        "name" : "메가커피 서대문역점",
+                        "type" : "FRANCHISE",
+                        "address" : {
+                          "city" : "도시",
+                          "street" : "거리",
+                          "zipCode" : "12345"
+                        },
+                        "timeRange" : {
+                          "startTime" : "00:00",
+                          "endTime" : "23:59:59.999999999"
+                        },
+                        "deleted" : false
+                      },
+                      "educations" : [ {
+                        "id" : 1,
+                        "name" : "테스트 프로그램",
+                        "educationPlaces" : [ {
+                          "id" : 1,
+                          "address" : {
+                            "city" : "도시",
+                            "street" : "거리",
+                            "zipCode" : "12345"
+                          },
+                          "maxParticipant" : 3,
+                          "date" : "2023-08-28",
+                          "timeRange" : {
+                            "startTime" : "00:00",
+                            "endTime" : "23:59:59.999999999"
+                          }
+                        } ]
+                      } ],
+                      "createdAt" : null,
+                      "updatedAt" : null
+                    }
+    put:
+      tags:
+      - user
+      operationId: 유저 수정 API
+      parameters:
+      - name: id
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-v1-users-id248312028'
+            examples:
+              유저 수정 API:
+                value:
+                  {
+                    "address" : {
+                      "city" : "어느 도시",
+                      "street" : "어느 거리",
+                      "zipCode" : "12345"
+                    },
+                    "employeeType" : "MANAGER",
+                    "phoneNumber" : "010-1234-1234",
+                    "workTimeType" : "WEEKDAY",
+                    "storeId" : 1
+                  }
+      responses:
+        "200":
+          description: "200"
+    delete:
+      tags:
+      - user
+      operationId: 유저 삭제 API
+      parameters:
+      - name: id
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: "204"
+  /api/v1/educations/{id}/place/register:
+    post:
+      tags:
+      - education
+      operationId: 교육 장소 등록 API
+      parameters:
+      - name: id
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-v1-educations-id-place-register-333433684'
+            examples:
+              교육 장소 등록 API:
+                value:
+                  {
+                    "places" : [ {
+                      "address" : {
+                        "city" : "어느 도시",
+                        "street" : "어느 거리",
+                        "zipCode" : "12345"
+                      },
+                      "maxParticipant" : 3,
+                      "date" : "2023-08-28",
+                      "timeRange" : {
+                        "startTime" : "00:00",
+                        "endTime" : "23:59:59"
+                      }
+                    } ]
+                  }
+      responses:
+        "202":
+          description: "202"
+  /api/v1/educations/{id}/stores/register:
+    post:
+      tags:
+      - education
+      operationId: 교육 이수할 매장 등록 API
+      parameters:
+      - name: id
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-v1-educations-id-stores-register2072950516'
+            examples:
+              교육 이수할 매장 등록 API:
+                value:
+                  {
+                    "stores" : [ 1 ]
+                  }
+      responses:
+        "202":
+          description: "202"
+  /api/v1/educations/{id}/places/participant/{userId}/register:
+    post:
+      tags:
+      - education
+      operationId: 교육 장소 참여자 등록 API
+      parameters:
+      - name: id
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-v1-educations-id-places-participant-userId-register-1794638756'
+            examples:
+              교육 장소 참여자 등록 API:
+                value:
+                  {
+                    "educationPlaceIds" : [ 1 ]
+                  }
+      responses:
+        "202":
+          description: "202"
 components:
-  securitySchemes:
-    main_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: http://example.com/api/oauth/dialog
-          scopes:
-            read:users: read users info
-            write:users: modify or remove users
-    api_key:
-      type: apiKey
-      in: header
-      name: api_key
-    basic_auth:
-      type: http
-      scheme: basic
+  schemas:
+    api-v1-users-id1199840615:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: 생성일
+        phoneNumber:
+          type: string
+          description: 연락처
+        employeeType:
+          type: string
+          description: 직원 타입
+        address:
+          type: object
+          properties:
+            zipCode:
+              type: string
+              description: 우편번호
+            city:
+              type: string
+              description: 도시
+            street:
+              type: string
+              description: 거리
+          description: 주소
+        name:
+          type: string
+          description: 이름
+        educations:
+          type: array
+          description: 교육 프로그램 데이터
+          items:
+            type: object
+            properties:
+              educationPlaces:
+                type: array
+                description: 교육 장소 데이터
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      description: 날짜
+                    address:
+                      type: object
+                      properties:
+                        zipCode:
+                          type: string
+                          description: 우편번호
+                        city:
+                          type: string
+                          description: 도시
+                        street:
+                          type: string
+                          description: 거리
+                      description: 교육 장소 주소
+                    id:
+                      type: number
+                      description: 교육 장소 PK
+                    maxParticipant:
+                      type: number
+                      description: 최대 참여자 수
+                    timeRange:
+                      type: object
+                      properties:
+                        startTime:
+                          type: string
+                          description: 시작시간
+                        endTime:
+                          type: string
+                          description: 종료시간
+                      description: 운영시간
+              name:
+                type: string
+                description: 교육 프로그램 이름
+              id:
+                type: number
+                description: 교육 프로그램 PK
+        store:
+          type: object
+          properties:
+            deleted:
+              type: boolean
+              description: 매장 삭제여부
+            address:
+              type: object
+              properties:
+                zipCode:
+                  type: string
+                  description: 우편번호
+                city:
+                  type: string
+                  description: 도시
+                street:
+                  type: string
+                  description: 거리
+              description: 매장 주소
+            name:
+              type: string
+              description: 매장 이름
+            id:
+              type: number
+              description: 매장 PK
+            type:
+              type: string
+              description: 매장 타입
+            timeRange:
+              type: object
+              properties:
+                startTime:
+                  type: string
+                  description: 오픈시간
+                endTime:
+                  type: string
+                  description: 마감시간
+              description: 매장 운영시간
+          description: 매장 데이터
+        id:
+          type: number
+          description: 유저 PK
+        workTimeType:
+          type: string
+          description: 업무 요일 타입
+        email:
+          type: string
+          description: 이메일
+        updatedAt:
+          type: string
+          description: 변경일
+    api-v1-users-scroll-610140313:
+      type: object
+      properties:
+        number:
+          type: number
+          description: 현재 페이지 번호
+        numberOfElements:
+          type: number
+          description: 현재 페이지에서 출력된 요소 개수
+        last:
+          type: boolean
+          description: 마지막인지
+        size:
+          type: number
+          description: 몇개까지 보이게 할건지
+        sort:
+          type: object
+          properties:
+            unsorted:
+              type: boolean
+              description: 정렬되어있지 않은지
+            sorted:
+              type: boolean
+              description: 정렬되었는지
+            empty:
+              type: boolean
+              description: 정렬설정이 비어있는지
+          description: 정렬
+        first:
+          type: boolean
+          description: 처음인지
+        content:
+          type: array
+          description: 실제 데이터
+          items:
+            type: object
+            properties:
+              employeeType:
+                type: string
+                description: 직원 타입
+              name:
+                type: string
+                description: 유저 이름
+              store:
+                type: object
+                properties:
+                  deleted:
+                    type: boolean
+                    description: 매장 삭제여부
+                  name:
+                    type: string
+                    description: 매장 이름
+                  id:
+                    type: number
+                    description: 매장 ID
+                  type:
+                    type: string
+                    description: 매장 타입
+                description: 매장
+              id:
+                type: number
+                description: 유저 PK
+              workTimeType:
+                type: string
+                description: 업무요일 타입
+        empty:
+          type: boolean
+          description: 비어있는지
+    api-v1-stores-id-795190884:
+      type: object
+      properties:
+        address:
+          type: object
+          properties:
+            zipCode:
+              type: string
+              description: 우편번호
+            city:
+              type: string
+              description: 도시
+            street:
+              type: string
+              description: 거리
+          description: 주소
+        ownerId:
+          type: number
+          description: 점주 PK
+        type:
+          type: string
+          description: 매장 타입
+        timeRange:
+          type: object
+          properties:
+            startTime:
+              type: string
+              description: 오픈시간
+            endTime:
+              type: string
+              description: 마감시간
+          description: 매장 운영시간
+    api-v1-stores1989634448:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: 생성일
+        address:
+          type: object
+          properties:
+            zipCode:
+              type: string
+              description: 우편번호
+            city:
+              type: string
+              description: 도시
+            street:
+              type: string
+              description: 거리
+          description: 매장 주소
+        name:
+          type: string
+          description: 매장 이름
+        id:
+          type: number
+          description: 매장 PK
+        type:
+          type: string
+          description: 매장 타입
+        updatedAt:
+          type: string
+          description: 변경일
+        timeRange:
+          type: object
+          properties:
+            startTime:
+              type: string
+              description: 오픈시간
+            endTime:
+              type: string
+              description: 마감시간
+          description: 매장 운영시간
+    api-v1-educations1300106391:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 이름
+        content:
+          type: string
+          description: 내용
+        targetTypes:
+          type: array
+          description: 대상자 타입들
+          items:
+            oneOf:
+            - type: object
+            - type: boolean
+            - type: string
+            - type: number
+    api-v1-stores-scroll1321936866:
+      type: object
+      properties:
+        number:
+          type: number
+          description: 현재 페이지 번호
+        numberOfElements:
+          type: number
+          description: 현재 페이지에서 출력된 요소 개수
+        last:
+          type: boolean
+          description: 마지막인지
+        size:
+          type: number
+          description: 몇개까지 보이게 할건지
+        sort:
+          type: object
+          properties:
+            unsorted:
+              type: boolean
+              description: 정렬되어있지 않은지
+            sorted:
+              type: boolean
+              description: 정렬되었는지
+            empty:
+              type: boolean
+              description: 정렬설정이 비어있는지
+          description: 정렬
+        first:
+          type: boolean
+          description: 처음인지
+        content:
+          type: array
+          description: 실제 데이터
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: 매장 이름
+              id:
+                type: number
+                description: 매장 PK
+              type:
+                type: string
+                description: 매장 타입
+        empty:
+          type: boolean
+          description: 비어있는지
+    api-v1-stores-383454066:
+      type: object
+      properties:
+        address:
+          type: object
+          properties:
+            zipCode:
+              type: string
+              description: 우편번호
+            city:
+              type: string
+              description: 도시
+            street:
+              type: string
+              description: 거리
+          description: 주소
+        name:
+          type: string
+          description: 이름
+        type:
+          type: string
+          description: 매장 타입
+        timeRange:
+          type: object
+          properties:
+            startTime:
+              type: string
+              description: 오픈시간
+            endTime:
+              type: string
+              description: 마감시간
+          description: 매장 운영시간
+    api-v1-users1040221739:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: 생성일
+        phoneNumber:
+          type: string
+          description: 연락처
+        employeeType:
+          type: string
+          description: 직원 타입
+        address:
+          type: object
+          properties:
+            zipCode:
+              type: string
+              description: 우편번호
+            city:
+              type: string
+              description: 도시
+            street:
+              type: string
+              description: 거리
+          description: 주소
+        name:
+          type: string
+          description: 이름
+        store:
+          type: object
+          properties:
+            deleted:
+              type: boolean
+              description: 매장 삭제여부
+            address:
+              type: object
+              properties:
+                zipCode:
+                  type: string
+                  description: 우편번호
+                city:
+                  type: string
+                  description: 도시
+                street:
+                  type: string
+                  description: 거리
+              description: 매장 주소
+            name:
+              type: string
+              description: 매장 이름
+            id:
+              type: number
+              description: 매장 PK
+            type:
+              type: string
+              description: 매장 타입
+            timeRange:
+              type: object
+              properties:
+                startTime:
+                  type: string
+                  description: 오픈시간
+                endTime:
+                  type: string
+                  description: 마감시간
+              description: 매장 운영시간
+          description: 매장 데이터
+        id:
+          type: number
+          description: 유저 PK
+        workTimeType:
+          type: string
+          description: 업무 요일 타입
+        email:
+          type: string
+          description: 이메일
+        updatedAt:
+          type: string
+          description: 변경일
+    api-v1-educations-id-place-register-333433684:
+      type: object
+      properties:
+        places:
+          type: array
+          description: 교육장소 요청 데이터
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                description: 날짜
+              address:
+                type: object
+                properties:
+                  zipCode:
+                    type: string
+                    description: 우편번호
+                  city:
+                    type: string
+                    description: 도시
+                  street:
+                    type: string
+                    description: 거리
+                description: 교육 장소 주소
+              maxParticipant:
+                type: number
+                description: 최대 참여자 수
+              timeRange:
+                type: object
+                properties:
+                  startTime:
+                    type: string
+                    description: 시작시간
+                  endTime:
+                    type: string
+                    description: 종료시간
+                description: 운영시간
+    api-v1-users-id248312028:
+      type: object
+      properties:
+        employeeType:
+          type: string
+          description: 직원 타입
+        phoneNumber:
+          type: string
+          description: 연락처
+        address:
+          type: object
+          properties:
+            zipCode:
+              type: string
+              description: 우편번호
+            city:
+              type: string
+              description: 도시
+            street:
+              type: string
+              description: 거리
+          description: 주소
+        storeId:
+          type: number
+          description: 유저 PK
+        workTimeType:
+          type: string
+          description: 업무 요일 타입
+    api-v1-stores-id-1680989347:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: 생성일
+        address:
+          type: object
+          properties:
+            zipCode:
+              type: string
+              description: 우편번호
+            city:
+              type: string
+              description: 도시
+            street:
+              type: string
+              description: 거리
+          description: 매장 주소
+        name:
+          type: string
+          description: 매장 이름
+        educations:
+          type: array
+          description: 교육 프로그램 데이터
+          items:
+            type: object
+            properties:
+              educationPlaces:
+                type: array
+                description: 교육 장소 데이터
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      description: 날짜
+                    address:
+                      type: object
+                      properties:
+                        zipCode:
+                          type: string
+                          description: 우편번호
+                        city:
+                          type: string
+                          description: 도시
+                        street:
+                          type: string
+                          description: 거리
+                      description: 교육 장소 주소
+                    id:
+                      type: number
+                      description: 교육 장소 PK
+                    maxParticipant:
+                      type: number
+                      description: 최대 참여자 수
+                    timeRange:
+                      type: object
+                      properties:
+                        startTime:
+                          type: string
+                          description: 시작시간
+                        endTime:
+                          type: string
+                          description: 종료시간
+                      description: 운영시간
+              name:
+                type: string
+                description: 교육 프로그램 이름
+              id:
+                type: number
+                description: 교육 프로그램 PK
+              targetTypes:
+                type: array
+                description: 대상자 타입들
+                items:
+                  oneOf:
+                  - type: object
+                  - type: boolean
+                  - type: string
+                  - type: number
+        id:
+          type: number
+          description: 매장 PK
+        ownerId:
+          type: number
+          description: 점주 PK
+        type:
+          type: string
+          description: 매장 타입
+        updatedAt:
+          type: string
+          description: 변경일
+        timeRange:
+          type: object
+          properties:
+            startTime:
+              type: string
+              description: 오픈시간
+            endTime:
+              type: string
+              description: 마감시간
+          description: 매장 운영시간
+    api-v1-educations-id-1347438090:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: 생성일
+        educationPlaces:
+          type: array
+          description: 교육 장소 데이터
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                description: 날짜
+              address:
+                type: object
+                properties:
+                  zipCode:
+                    type: string
+                    description: 우편번호
+                  city:
+                    type: string
+                    description: 도시
+                  street:
+                    type: string
+                    description: 거리
+                description: 교육 장소 주소
+              id:
+                type: number
+                description: 교육 장소 PK
+              maxParticipant:
+                type: number
+                description: 최대 참여자 수
+              timeRange:
+                type: object
+                properties:
+                  startTime:
+                    type: string
+                    description: 시작시간
+                  endTime:
+                    type: string
+                    description: 종료시간
+                description: 운영시간
+        name:
+          type: string
+          description: 교육 이름
+        id:
+          type: number
+          description: 교육 PK
+        content:
+          type: string
+          description: 교육 설명
+        updatedAt:
+          type: string
+          description: 변경일
+        targetTypes:
+          type: array
+          description: 대상자 타입들
+          items:
+            oneOf:
+            - type: object
+            - type: boolean
+            - type: string
+            - type: number
+    api-v1-users-1318851815:
+      type: object
+      properties:
+        employeeType:
+          type: string
+          description: 직원 타입
+        phoneNumber:
+          type: string
+          description: 연락처
+        address:
+          type: object
+          properties:
+            zipCode:
+              type: string
+              description: 우편번호
+            city:
+              type: string
+              description: 도시
+            street:
+              type: string
+              description: 거리
+          description: 주소
+        name:
+          type: string
+          description: 이름
+        storeId:
+          type: number
+          description: 유저 PK
+        workTimeType:
+          type: string
+          description: 업무 요일 타입
+        email:
+          type: string
+          description: 이메일
+    api-v1-educations-id-stores-register2072950516:
+      type: object
+      properties:
+        stores:
+          type: array
+          description: 이수할 매장 PK들
+          items:
+            oneOf:
+            - type: object
+            - type: boolean
+            - type: string
+            - type: number
+    api-v1-educations-id-places-participant-userId-register-1794638756:
+      type: object
+      properties:
+        educationPlaceIds:
+          type: array
+          description: 등록할 교육장소 PK들
+          items:
+            oneOf:
+            - type: object
+            - type: boolean
+            - type: string
+            - type: number
+    api-v1-educations-1716852041:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          description: 생성일
+        name:
+          type: string
+          description: 교육 이름
+        id:
+          type: number
+          description: 교육 PK
+        content:
+          type: string
+          description: 교육 설명
+        updatedAt:
+          type: string
+          description: 변경일
+        targetTypes:
+          type: array
+          description: 대상자 타입들
+          items:
+            oneOf:
+            - type: object
+            - type: boolean
+            - type: string
+            - type: number
