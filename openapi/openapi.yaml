@@ -98,6 +98,8 @@ info:
     |---------------------|----------------|
     | header              | 설명             |
     | x-meloning-trace-id | API 요청을 추적할 ID |
+    
+    <SecurityDefinitions />
   version: 1.0.0
 servers:
   - url: http://localhost:9000
